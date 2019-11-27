@@ -6,57 +6,58 @@
 /*   By: clbouche <clbouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:57:12 by clbouche          #+#    #+#             */
-/*   Updated: 2019/11/25 13:34:51 by clbouche         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:53:30 by clbouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_form_line(const char *s1)
+char	*ft_savetxt(char *s)
 {
-	char	*s2;
 	int		i;
 	int		j;
+	char	*save;
 
 	i = 0;
-	j = 0;
-	while (s1[i] && s1[i] != '\n')
+	while (s[i] != '\n' && s[i])
 		i++;
-	if (!(s2 = malloc(sizeof(char) * (ft_strlen(s1) + 1))))
+	if (!(save = malloc(sizeof(char) * (ft_strlen(s)) - i + 1)))
 		return (0);
-	while (s1[j] && s1[j] != '\n')
+	j = 0;
+	i++;
+	while (s[i])
 	{
-		s2[j] = s1[j];
+		save[j] = s[i];
+		i++;
 		j++;
-		i--;
 	}
-	s2[j] = '\0';
-	return ((char *)s2);
+	free(s);
+	save[j] = '\0';
+	return (save);
 }
 
-int get_next_line(int fd, char **line)
+int		get_next_line(int fd, char **line)
 {
 	int			op;
-	char		*buff; 
+	char		*buff;
 	static char	*str;
 
-	op = 0;
-	if (fd < 1 || !line || BUFFER_SIZE <= 0) 
+	op = 1;
+	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	if (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	if (!(buff = malloc(sizeof(char) * BUFFER_SIZE + 1)))
 		return (-1);
-	while ((op = read(fd, buff, BUFFER_SIZE)) > 0) 
+	while (op != 0 && ft_check(str) != -1)
 	{
+		if ((op = read(fd, buff, BUFFER_SIZE)) == -1)
+			return (-1);
 		buff[op] = '\0';
 		str = ft_strjoin(str, buff);
-		if (ft_strchr(buff, '\n'))
-		{
-			break;
-		}
 	}
 	free(buff);
 	*line = ft_form_line(str);
+	str = ft_savetxt(str);
 	if (op == 0)
 		return (0);
-	return(1);
+	return (1);
 }

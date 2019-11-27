@@ -6,11 +6,27 @@
 /*   By: clbouche <clbouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 15:39:46 by clbouche          #+#    #+#             */
-/*   Updated: 2019/11/25 10:35:03 by clbouche         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:54:41 by clbouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int		ft_check(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -68,17 +84,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_form_line(const char *s1)
 {
-	while (*s)
-	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
-	}
-	if (s == '\0' || c == 0)
-		return ((char *)s);
-	else
-		return (0);
-}
+	char	*s2;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
+	while (s1[i] && s1[i] != '\n')
+		i++;
+	if (!(s2 = malloc(sizeof(char) * i + 1)))
+		return (0);
+	i = 0;
+	while (s1[i] && s1[i] != '\n')
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return ((char *)s2);
+}
