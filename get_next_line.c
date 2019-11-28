@@ -6,7 +6,7 @@
 /*   By: clbouche <clbouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:57:12 by clbouche          #+#    #+#             */
-/*   Updated: 2019/11/27 15:53:30 by clbouche         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:27:52 by clbouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ char	*ft_savetxt(char *s)
 	i = 0;
 	while (s[i] != '\n' && s[i])
 		i++;
+	if (!s[i])
+	{
+		free(s);
+		return (0);
+	}
 	if (!(save = malloc(sizeof(char) * (ft_strlen(s)) - i + 1)))
 		return (0);
 	j = 0;
@@ -36,10 +41,10 @@ char	*ft_savetxt(char *s)
 	return (save);
 }
 
-int		get_next_line(int fd, char **line)
+int get_next_line(int fd, char **line)
 {
 	int			op;
-	char		*buff;
+	char		*buff; 
 	static char	*str;
 
 	op = 1;
@@ -59,5 +64,5 @@ int		get_next_line(int fd, char **line)
 	str = ft_savetxt(str);
 	if (op == 0)
 		return (0);
-	return (1);
+	return(1);
 }

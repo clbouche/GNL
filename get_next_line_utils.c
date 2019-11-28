@@ -6,7 +6,7 @@
 /*   By: clbouche <clbouche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 15:39:46 by clbouche          #+#    #+#             */
-/*   Updated: 2019/11/27 15:54:41 by clbouche         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:06:47 by clbouche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_check(char *str)
 	int i;
 
 	i = 0;
-	if (!str)
+	if (!str)	
 		return (0);
 	while (str[i])
 	{
